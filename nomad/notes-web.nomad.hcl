@@ -15,7 +15,7 @@ job "notes-web-job" {
       provider = "nomad"
     }
 
-    task "ptc-web-task" {
+    task "notes-web-task" {
 
       driver = "docker"
 
