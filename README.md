@@ -5,18 +5,18 @@
 Make sure you have docker daemon started.
 ```
 mvn clean spring-boot:build-image -DskipTests
+
 docker run -p 8080:8080 notes:0.0.1-SNAPSHOT
 ```
 
+Run in Nomad cluster
 ```
-mvn clean spring-boot:build-image -DskipTests
-docker run -p 8080:8080 notes:0.0.1-SNAPSHOT
-```
+nomad agent -config=nomad/nomad.hcl
 
-Run in Nomad dev cluster
-```
-sudo nomad agent -dev \
--bind 0.0.0.0 \
--network-interface='{{ GetDefaultInterfaces | attr "name" }}'
 nomad job run nomad/notes-web.nomad.hcl 
+
+nomad node status -verbose \
+    $(nomad job allocs notes-web-job | grep -i running | awk '{print $2}') | \
+    grep -i ip-address | awk -F "=" '{print $2}' | xargs | \
+    awk '{print "http://"$1":8080"}'
 ```
