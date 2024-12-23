@@ -1,22 +1,23 @@
-job "notes-migrate" {
+job "notes-flyway" {
   type = "batch"
 
-  parameterized {
-    meta_required = ["budget"]
-  }
-
-  group "notes-migrate-group" {
+  group "notes-flyway-group" {
     count = 1
+    restart {
+      attempts = 0
+    }
 
-    task "notes-migrate-task" {
+    task "notes-flyway-task" {
 
       template {
         data        = <<EOH
-{{ range nomadService "postgres-svc" }}
-REDIS_HOST={{ .Address }}
-REDIS_PORT={{ .Port }}
+{{ range nomadService "notes-postgres-svc" }}
+POSTGRES_ADDRESS={{ .Address }}
+POSTGRES_PORT={{ .Port }}
+POSTGRES_USER=d
+POSTGRES_PASSWORD=d
+POSTGRES_DB=postgres
 {{ end }}
-# PTC_BUDGET={{ env "NOMAD_META_budget" }}
 EOH
         destination = "local/env.txt"
         env         = true
@@ -24,7 +25,13 @@ EOH
       driver = "docker"
 
       config {
-        image = "ghcr.io/hashicorp-education/learn-nomad-getting-started/ptc-setup:1.0"
+        image = "flyway/flyway:10.18.0"
+        command = "migrate"
+        volumes = [
+          # make sure you use your path to project
+          "/mnt/c/Users/Artiom/Documents/Intellij/notes/flyway/flyway.conf:/flyway/conf/flyway.conf",
+          "/mnt/c/Users/Artiom/Documents/Intellij/notes/flyway/sql:/flyway/sql"
+        ]
       }
     }
   }
