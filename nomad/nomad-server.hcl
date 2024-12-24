@@ -1,12 +1,12 @@
 bind_addr = "0.0.0.0"
 
-# make sure you use your user name
-data_dir = "/home/tao/nomad/datadir"
+# TODO make sure you use your user name
+data_dir = "/home/d/nomad/datadir"
 
 log_level = "INFO"
 
-# make sure you use your user name
-log_file  = "/home/tao/nomad/nomad.log"
+# TODO make sure you use your user name
+log_file  = "/home/d/nomad/nomad.log"
 
 server {
   enabled = true
