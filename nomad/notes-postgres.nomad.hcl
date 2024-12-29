@@ -1,14 +1,14 @@
-job "notes-postgres-job" {
+job "notes-postgres" {
   type = "service"
 
   group "notes-postgres-group" {
     count = 1
 
-#     volume "postgres" {
-#       type      = "host"
-#       read_only = false
-#       source    = "postgres"
-#     }
+    volume "postgres" {
+      type      = "host"
+      read_only = false
+      source    = "postgres"
+    }
 
     network {
       port "postgres" {
@@ -24,11 +24,11 @@ job "notes-postgres-job" {
 
     task "postgres-task" {
 
-#       volume_mount {
-#         volume      = "postgres"
-#         destination = "/var/lib/postgresql/data"
-#         read_only   = false
-#       }
+      volume_mount {
+        volume      = "postgres"
+        destination = "/var/lib/postgresql/data"
+        read_only   = false
+      }
 
       template {
         data        = <<EOH

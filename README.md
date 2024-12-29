@@ -3,6 +3,9 @@
 
 ### Build & Run
 Make sure you have docker daemon started.
+It is recommended to have docker engine installed directly in wsl, without Docker or Racher Desktops.
+Some users may fail to start nomad agent with Rancher Desktops, other may fail to get nomad jobs communicated with each other using Docker Desktop. 
+
 ```
 mvn clean spring-boot:build-image -DskipTests
 
@@ -11,6 +14,9 @@ docker run -p 8080:8080 notes:0.0.1-SNAPSHOT
 
 Run in Nomad cluster
 ```
+// Create dir for postgres volume
+sudo mkdir /home/tao/nomad/postgres-data
+
 sudo nomad agent -config=nomad/nomad-server.hcl -config=nomad/nomad-client.hcl
 
 nomad job run nomad/notes-postgres.nomad.hcl
@@ -39,6 +45,7 @@ You can open Nomad dir with datadir and logs using Visual Code, make sure you us
 ```
 code /home/tao/nomad
 ```
+Note: you will not see the /home/tao/nomad/postgres-data because it requires sudo access to see it
 
 Run in docker compose. Useful if you want to test your app and db fast:
 ```

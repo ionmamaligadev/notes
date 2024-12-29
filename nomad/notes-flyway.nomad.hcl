@@ -30,8 +30,8 @@ EOH
         command = "migrate"
         volumes = [
           # TODO make sure you use your path to project
-          "/mnt/c/Users/ADiulgher/Documents/Intellij/notes/flyway/flyway.conf:/flyway/conf/flyway.conf",
-          "/mnt/c/Users/ADiulgher/Documents/Intellij/notes/flyway/sql:/flyway/sql"
+          "/mnt/c/Users/Artiom/Documents/Intellij/notes/flyway/flyway.conf:/flyway/conf/flyway.conf",
+          "/mnt/c/Users/Artiom/Documents/Intellij/notes/flyway/sql:/flyway/sql"
         ]
       }
     }
