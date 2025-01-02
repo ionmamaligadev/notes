@@ -41,6 +41,9 @@ nomad node status -verbose \
 Open Nomad UI
 http://localhost:4646/ui/jobs
 
+Open Consul UI
+http://localhost:8500
+
 You can open Nomad dir with datadir and logs using Visual Code, make sure you use your user name:
 ```
 code /home/tao/nomad
@@ -51,3 +54,14 @@ Run in docker compose. Useful if you want to test your app and db fast:
 ```
 docker compose -f docker-compose/docker-compose.yml up -d
 ```
+
+If I follow this guide https://developer.hashicorp.com/nomad/docs/integrations/consul/service-mesh
+and install cni-plugins like here https://developer.hashicorp.com/nomad/docs/networking/cni#cni-reference-plugins
+and install consul-cni with `sudo apt install consul-cni`
+and run:
+consul agent -dev
+sudo nomad agent -dev-connect
+nomad job run servicemesh.nomad.hcl
+see ip in `nomad node status -verbose`
+open http://<ip>:9002/
+then I see Unreachable error
