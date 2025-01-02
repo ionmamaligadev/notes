@@ -17,6 +17,8 @@ Run in Nomad cluster
 // Create dir for postgres volume
 sudo mkdir /home/tao/nomad/postgres-data
 
+consul agent -config-file=nomad/consul.hcl
+
 sudo nomad agent -config=nomad/nomad-server.hcl -config=nomad/nomad-client.hcl
 
 nomad job run nomad/notes-postgres.nomad.hcl
@@ -25,21 +27,18 @@ nomad job run nomad/notes-flyway.nomad.hcl
 
 nomad job run nomad/notes-web.nomad.hcl 
 
-// See IP address of the app
-nomad node status -verbose \
-    $(nomad job allocs notes-web | grep -i running | awk '{print $2}') | \
-    grep -i ip-address | awk -F "=" '{print $2}' | xargs | \
-    awk '{print "http://"$1":8080"}'
-
-// See IP address of the db  
-nomad node status -verbose \
-    $(nomad job allocs notes-postgres | grep -i running | awk '{print $2}') | \
-    grep -i ip-address | awk -F "=" '{print $2}' | xargs | \
-    awk '{print "http://"$1":5432"}'
+// See IP addresses
+nomad node status -verbose
 ```
 
 Open Nomad UI
 http://localhost:4646/ui/jobs
+
+Open Consul UI
+http://localhost:8500
+
+Open Notes
+http://172.19.95.218:8080/
 
 You can open Nomad dir with datadir and logs using Visual Code, make sure you use your user name:
 ```
@@ -51,3 +50,11 @@ Run in docker compose. Useful if you want to test your app and db fast:
 ```
 docker compose -f docker-compose/docker-compose.yml up -d
 ```
+
+References:
+Nomad installation, cluster and job create, update, delete https://developer.hashicorp.com/nomad/tutorials/get-started/gs-overview
+Consul installation https://developer.hashicorp.com/consul/install?product_intent=consul
+consul-cni installation: `sudo apt install consul-cni`
+CNI plugins installation https://developer.hashicorp.com/nomad/docs/networking/cni#cni-reference-plugins
+Consul Service Mesh configs and requirements https://developer.hashicorp.com/nomad/docs/integrations/consul/service-mesh
+Nomad Host Volume tutorial https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes

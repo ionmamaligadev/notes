@@ -9,6 +9,7 @@ client {
 
   options {
     "docker.volumes.enabled" = "true"
+    "docker.cleanup.image" = "false"
   }
 
 }

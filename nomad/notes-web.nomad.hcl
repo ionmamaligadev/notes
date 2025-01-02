@@ -4,37 +4,40 @@ job "notes-web-job" {
   group "notes-web-group" {
     count = 1
     network {
+      mode = "bridge"
       port "web" {
         static = 8080
+        to = 8080
       }
     }
 
     service {
       name     = "notes-web-svc"
       port     = "web"
-      provider = "nomad"
+
+      connect {
+        sidecar_service {
+          proxy {
+            transparent_proxy {}
+          }
+        }
+      }
     }
 
     task "notes-web-task" {
 
-      template {
-        data        = <<EOH
-{{ range nomadService "notes-postgres-svc" }}
-POSTGRES_ADDRESS={{ .Address }}
-POSTGRES_PORT={{ .Port }}
-POSTGRES_USER=d
-POSTGRES_PASSWORD=d
-POSTGRES_DB=postgres
-{{ end }}
-EOH
-        destination = "local/env.txt"
-        env         = true
+      env {
+        POSTGRES_ADDRESS = "notes-postgres-svc.service.consul"
+        POSTGRES_PORT = "5432"
+        POSTGRES_USER = "d"
+        POSTGRES_PASSWORD = "d"
+        POSTGRES_DB = "postgres"
       }
 
       driver = "docker"
 
       config {
-        image = "notes:0.0.1-SNAPSHOT"
+        image = "notes:0.1.0-SNAPSHOT"
         ports = ["web"]
       }
 

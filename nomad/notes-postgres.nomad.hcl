@@ -11,15 +11,25 @@ job "notes-postgres" {
     }
 
     network {
+      mode = "bridge"
       port "postgres" {
         static = 5432
+        to = 5432
       }
     }
 
     service {
       name     = "notes-postgres-svc"
       port     = "postgres"
-      provider = "nomad"
+
+      connect {
+        sidecar_service {
+          proxy {
+            transparent_proxy {}
+          }
+        }
+      }
+
     }
 
     task "postgres-task" {
@@ -30,13 +40,9 @@ job "notes-postgres" {
         read_only   = false
       }
 
-      template {
-        data        = <<EOH
-POSTGRES_USER=d
-POSTGRES_PASSWORD=d
-EOH
-        destination = "local/env.txt"
-        env         = true
+      env {
+        POSTGRES_USER = "d"
+        POSTGRES_PASSWORD = "d"
       }
 
       driver = "docker"
@@ -46,5 +52,6 @@ EOH
         ports = ["postgres"]
       }
     }
+
   }
 }
