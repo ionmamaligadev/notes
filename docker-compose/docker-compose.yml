@@ -28,7 +28,7 @@ services:
         condition: service_healthy
 
   app:
-    image: notes:0.0.1-SNAPSHOT
+    image: notes:0.1.0-SNAPSHOT
     environment:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     ports:

@@ -7,20 +7,30 @@ job "notes-flyway" {
       attempts = 0
     }
 
+    network {
+      mode = "bridge"
+    }
+
+    service {
+      name = "notes-flyway-svc"
+
+      connect {
+        sidecar_service {
+          proxy {
+            transparent_proxy {}
+          }
+        }
+      }
+    }
+
     task "notes-flyway-task" {
 
-      template {
-        data        = <<EOH
-{{ range nomadService "notes-postgres-svc" }}
-POSTGRES_ADDRESS={{ .Address }}
-POSTGRES_PORT={{ .Port }}
-POSTGRES_USER=d
-POSTGRES_PASSWORD=d
-POSTGRES_DB=postgres
-{{ end }}
-EOH
-        destination = "local/env.txt"
-        env         = true
+      env {
+        POSTGRES_ADDRESS = "notes-postgres-svc.service.consul"
+        POSTGRES_PORT = "5432"
+        POSTGRES_USER = "d"
+        POSTGRES_PASSWORD = "d"
+        POSTGRES_DB = "postgres"
       }
 
       driver = "docker"

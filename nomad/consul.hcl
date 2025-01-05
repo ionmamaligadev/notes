@@ -11,4 +11,13 @@ ui_config {
 
 advertise_addr = "127.0.0.1"
 
+ports {
+  grpc = 8502
+}
+
+connect {
+  enabled = true
+}
+
+bootstrap = true
 
