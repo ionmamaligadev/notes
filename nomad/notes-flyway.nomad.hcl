@@ -23,6 +23,27 @@ job "notes-flyway" {
       }
     }
 
+    task "await-postgres-service" {
+      driver = "docker"
+
+      config {
+        image        = "busybox:1.28"
+        command      = "sh"
+        args         = ["-c", "echo -n 'Waiting for service'; until nslookup notes-postgres-svc.service.consul 2>&1 >/dev/null; do echo '.'; sleep 2; done"]
+        network_mode = "host"
+      }
+
+      resources {
+        cpu    = 200
+        memory = 128
+      }
+
+      lifecycle {
+        hook    = "prestart"
+        sidecar = false
+      }
+    }
+
     task "notes-flyway-task" {
 
       env {

@@ -19,9 +19,6 @@ job "notes-postgres" {
     }
 
     service {
-      name     = "notes-postgres-svc"
-      port     = "postgres"
-
       connect {
         sidecar_service {
           proxy {
@@ -30,9 +27,23 @@ job "notes-postgres" {
         }
       }
 
+
     }
 
     task "postgres-task" {
+
+      service {
+        name     = "notes-postgres-svc"
+        port     = "postgres"
+
+        check {
+          type    = "script"
+          command = "/bin/sh"
+          args    = ["-c", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+          interval = "2s"
+          timeout  = "1s"
+        }
+      }
 
       volume_mount {
         volume      = "postgres"

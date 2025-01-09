@@ -58,3 +58,6 @@ consul-cni installation: `sudo apt install consul-cni`
 CNI plugins installation https://developer.hashicorp.com/nomad/docs/networking/cni#cni-reference-plugins
 Consul Service Mesh configs and requirements https://developer.hashicorp.com/nomad/docs/integrations/consul/service-mesh
 Nomad Host Volume tutorial https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes
+Consul -dev configs https://github.com/hashicorp/consul/blob/33e5727aac81d744f16ede69233b2e5fd95a0b75/agent/config/default.go#L172-L216
+Nomad -dev configs https://github.com/hashicorp/nomad/blob/2bfe81772119f431fc75271d20aa7ca4fa3c1921/command/agent/config.go#L1324-L1378
+Express inter-job dependencies with init tasks https://developer.hashicorp.com/nomad/tutorials/task-deps/task-dependencies-interjob
