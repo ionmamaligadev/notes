@@ -28,5 +28,25 @@ spec:
               value: "d"
             - name: POSTGRES_DB
               value: "postgres"
+            - name: LOG_PATH
+              value: /logs/application.log
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: log-storage
+              mountPath: /logs
+        - name: log-writer-sidecar
+          image: busybox
+          command: ["sh", "-c", "tail -F /logs/application.log > /mnt/log/application.log"]
+          volumeMounts:
+            - name: log-storage
+              mountPath: /logs
+            - name: host-log-storage
+              mountPath: /mnt/log
+      volumes:
+        - name: log-storage
+          emptyDir: {}
+        - name: host-log-storage
+          hostPath:
+            path: /mnt/c/Users/vsamota/notes/logs
+            type: Directory
