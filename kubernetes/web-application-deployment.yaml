@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-image
+  template:
+    metadata:
+      labels:
+        app: notes-image
+    spec:
+      containers:
+        - name: notes-image
+          image: notes:0.1.0-SNAPSHOT
+          imagePullPolicy: Never
+          env:
+#            replace with your db credentials
+            - name: POSTGRES_ADDRESS
+              value: "postgres-service"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "d"
+            - name: POSTGRES_PASSWORD
+              value: "d"
+            - name: POSTGRES_DB
+              value: "postgres"
+          ports:
+            - containerPort: 8080

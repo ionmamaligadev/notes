@@ -64,22 +64,19 @@ Run in kubernetes / minikube
 ```
 Prerequisite: Create image before run command
 
-minikube start --driver=docker
-minikube -p minikube docker-env after that enter the following:
-SET DOCKER_TLS_VERIFY=1
-SET DOCKER_HOST=tcp://127.0.0.1:32816
-SET DOCKER_CERT_PATH=your value from the command above
-SET MINIKUBE_ACTIVE_DOCKERD=minikube
+// note: check database credentials in yaml files to correspond your local postgres db
+```
+ 0) kubectl apply -f kubernetes/pvc.yaml
+ 1) kubectl apply -f kubernetes/postgres-deployment.yaml
+ 2) kubectl apply -f kubernetes/postgres-service.yaml
+ 3) kubectl apply -f kubernetes/flyway-job.yaml
+ 4) kubectl apply -f kubernetes/web-application-deployment.yaml
+ 5) kubectl apply -f kubernetes/web-application.yaml
+ 6) minikube service notes-service --url
+```
 
-// Load image from your local pc to minikube 
-minikube image load notes:0.0.1-SNAPSHOT
-
-kubectl apply -f kubernetes/deployment.yaml
-kubectl apply -f kubernetes/service.yaml
-
+```
 // to verify if it works 
-
 kubectl get services
 minikube service notes-service
-
 ```
