@@ -58,3 +58,25 @@ consul-cni installation: `sudo apt install consul-cni`
 CNI plugins installation https://developer.hashicorp.com/nomad/docs/networking/cni#cni-reference-plugins
 Consul Service Mesh configs and requirements https://developer.hashicorp.com/nomad/docs/integrations/consul/service-mesh
 Nomad Host Volume tutorial https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes
+
+```
+Run in kubernetes / minikube
+```
+Prerequisite: Create image before run command
+
+// note: check database credentials in yaml files to correspond your local postgres db
+```
+ 0) kubectl apply -f kubernetes/pvc.yaml
+ 1) kubectl apply -f kubernetes/postgres-deployment.yaml
+ 2) kubectl apply -f kubernetes/postgres-service.yaml
+ 3) kubectl apply -f kubernetes/flyway-job.yaml
+ 4) kubectl apply -f kubernetes/web-application-deployment.yaml
+ 5) kubectl apply -f kubernetes/web-application.yaml
+ 6) minikube service notes-service --url
+```
+
+```
+// to verify if it works 
+kubectl get services
+minikube service notes-service
+```
