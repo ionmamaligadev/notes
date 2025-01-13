@@ -58,6 +58,8 @@ consul-cni installation: `sudo apt install consul-cni`
 CNI plugins installation https://developer.hashicorp.com/nomad/docs/networking/cni#cni-reference-plugins
 Consul Service Mesh configs and requirements https://developer.hashicorp.com/nomad/docs/integrations/consul/service-mesh
 Nomad Host Volume tutorial https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes
+
+```
 Run in kubernetes / minikube
 ```
 Prerequisite: Create image before run command
