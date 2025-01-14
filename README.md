@@ -66,12 +66,12 @@ Prerequisite: Create image before run command
 
 // note: check database credentials in yaml files to correspond your local postgres db
 ```
- 0) kubectl apply -f kubernetes/pvc.yaml
+ 0) kubectl apply -f kubernetes/postgres-pvc.yaml
  1) kubectl apply -f kubernetes/postgres-deployment.yaml
  2) kubectl apply -f kubernetes/postgres-service.yaml
  3) kubectl apply -f kubernetes/flyway-job.yaml
  4) kubectl apply -f kubernetes/web-application-deployment.yaml
- 5) kubectl apply -f kubernetes/web-application.yaml
+ 5) kubectl apply -f kubernetes/web-application-service.yaml
  6) minikube service notes-service --url
 ```
 
