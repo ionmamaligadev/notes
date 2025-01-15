@@ -18,9 +18,9 @@ spec:
           env:
 #            replace with your db credentials
             - name: POSTGRES_USER
-              value: d
+              value: postgres
             - name: POSTGRES_PASSWORD
-              value: d
+              value: vasya98
           ports:
             - containerPort: 5432
           volumeMounts:

@@ -65,14 +65,17 @@ Run in kubernetes / minikube
 Prerequisite: Create image before run command
 
 // note: check database credentials in yaml files to correspond your local postgres db
+
+Note: The PersistentVolume definition can be omitted because the default storage class (kubectl get sc) provides dynamic provisioning of storage. Therefore, only the PVC is required. In this example, an explicit configuration for the PV was provided to practice PV configuration definitions.
 ```
- 0) kubectl apply -f kubernetes/postgres-pvc.yaml
- 1) kubectl apply -f kubernetes/postgres-deployment.yaml
- 2) kubectl apply -f kubernetes/postgres-service.yaml
- 3) kubectl apply -f kubernetes/flyway-job.yaml
- 4) kubectl apply -f kubernetes/web-application-deployment.yaml
- 5) kubectl apply -f kubernetes/web-application-service.yaml
- 6) minikube service notes-service --url
+ 0) kubectl apply -f kubernetes/postgres-pv.yaml
+ 1) kubectl apply -f kubernetes/postgres-pvc.yaml
+ 2) kubectl apply -f kubernetes/postgres-deployment.yaml
+ 3) kubectl apply -f kubernetes/postgres-service.yaml
+ 4) kubectl apply -f kubernetes/flyway-job.yaml
+ 5) kubectl apply -f kubernetes/web-application-deployment.yaml
+ 6) kubectl apply -f kubernetes/web-application-service.yaml
+ 7) minikube service notes-service --url
 ```
 
 ```
