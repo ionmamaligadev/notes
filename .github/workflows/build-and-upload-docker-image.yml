@@ -1,7 +1,7 @@
 # This workflow will build docker image and push it to Docker Hub
 # The prerequisite is to have a docker hub account and create an auth token
 # Also create a secret for github repo (https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
-# The secrets should be named as follows DOCKERHUB_USERNAME and DOCKER_PASSWORD, where DOCKERHUB_USERNAME is the username of your docker hub account
+# The secrets should be named as follows DOCKER_USERNAME and DOCKER_PASSWORD, where DOCKER_USERNAME is the username of your docker hub account
 # and DOCKER_PASSWORD is the auth token created in docker hub
 
 # This workflow uses actions that are not certified by GitHub.
@@ -41,7 +41,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set VERSION environment variable
@@ -50,6 +50,6 @@ jobs:
 
       - name: Docker Tag-Push notes
         run: |
-          docker tag notes:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/notes:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/notes:latest
+          docker tag notes:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/notes:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/notes:latest
 
