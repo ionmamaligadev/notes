@@ -32,9 +32,9 @@ spec:
       volumes:
         - name: flyway-config
           hostPath:
-            path: /mnt/c/Users/vsamota/notes/flyway/flyway.conf
+            path: /mnt/c/Users/imamaliga/endava/projects/study/github/notes/flyway/flyway.conf
             type: File
         - name: flyway-sql
           hostPath:
-            path: /mnt/c/Users/vsamota/notes/flyway/sql
+            path: /mnt/c/Users/imamaliga/endava/projects/study/github/notes/flyway/sql
             type: Directory
