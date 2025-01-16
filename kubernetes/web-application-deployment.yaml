@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: notes-image
-          image: notes:0.1.0-SNAPSHOT
-          imagePullPolicy: Never
+          image: ghcr.io/ionmamaligadev/notes:latest
+          imagePullPolicy: Always
           env:
 #            replace with your db credentials
             - name: POSTGRES_ADDRESS
@@ -48,5 +48,5 @@ spec:
           emptyDir: {}
         - name: host-log-storage
           hostPath:
-            path: /mnt/c/Users/vsamota/notes/logs
+            path: /mnt/c/Users/imamaliga/notes/logs
             type: Directory
